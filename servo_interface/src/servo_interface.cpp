@@ -43,18 +43,16 @@ class ServoInterface {
     };
     for (int i = 0; i < NSERVOS; i++) {
       double x;
-      if (!nh->getParam(keys[i], x)) {
-        ROS_FATAL("Failed to get param %s", keys[i]);
-      }
+      bool res = nh->getParam(keys[i], x);
+      ROS_ASSERT_MSG(res, "Failed to get param %s", keys[i]);
       servo_configs[i] = x;
-      ROS_INFO("%s = %f", keys[i], x);
     }
     for (int i = 0; i < NSERVOS; i++) {
       char path[100];
       int pin = SERVO_PINS[i];
       std::snprintf(path, sizeof(path), "/sys/class/pwm/pwmchip0/pwm%d/duty_cycle", pin);
       FILE *f = fopen(path, "w");
-      ROS_ASSERT(f != NULL);
+      ROS_ASSERT_MSG(f != NULL, "Failed to open %s", path);
       servos[i] = f;
     }
     count = 0;
@@ -70,11 +68,6 @@ class ServoInterface {
 
   void callback(const trajectory_msgs::JointTrajectory::ConstPtr& msg) {
     auto positions = msg->points[0].positions;
-    if (count == 0) {
-      for (int i=0; i < NSERVOS; i++) {
-        ROS_INFO("%d %f", i, positions[i]);
-      }
-    }
     double lf1 = degrees(positions[0]);
     double lf2 = degrees(positions[1]);
     double lf3 = degrees(positions[2]);
@@ -108,11 +101,7 @@ class ServoInterface {
     for (int i = 0; i < NSERVOS; i++) {
       double angle = angles[i] + servo_configs[i];
       set_angle(i, angle);
-      if (count == 0) {
-        ROS_INFO("%d: %f", i, angle);
-      }
     }
-    count += 1;
   }
 };
 
