@@ -22,7 +22,7 @@ def callback(data):
 
 def showImage():
     rospy.init_node('display_interface',anonymous = True)
-    rospy.Subscriber('usb_cam/image_raw', Image_ROS, callback)
+    rospy.Subscriber('display_interface/image', Image_ROS, callback)
     rospy.spin()
 
 if __name__ == '__main__':
