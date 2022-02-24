@@ -29,4 +29,5 @@ if __name__ == '__main__':
     disp = ST7789()
     disp.begin()
     disp.clear()
+    disp.display()
     showImage()
