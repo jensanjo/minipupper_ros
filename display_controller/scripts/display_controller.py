@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from enum import Enum
 from pathlib import Path
 import rospy
@@ -27,7 +28,7 @@ class DisplayController:
         rospy.Subscriber('cmd_vel', geometry_msgs.msg.Twist, self.callback)
         self.publisher = rospy.Publisher('/display_interface/image',
             sensor_msgs.msg.Image, queue_size=10)
-        self.state = State.Init
+        self.state = State.Idle
         self.bridge = cv_bridge.CvBridge()
         self.image_names = {
             State.Init: 'notconnect.png',
@@ -63,9 +64,10 @@ class DisplayController:
         self.state = state
 
     def run(self):
+        '''publish image at least once per second'''
         rate = rospy.Rate(1)
         while not rospy.is_shutdown():
-            print("run")
+            self.publish_state(self.state)
             rate.sleep()
 
 if __name__ == '__main__':
