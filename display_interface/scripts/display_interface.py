@@ -11,8 +11,6 @@ import sys
 import time
 from PIL import Image
 
-sys.path.append("/home/ubuntu/MiniPupperROS/mangdang")
-sys.path.extend([os.path.join(root, name) for root, dirs, _ in os.walk("/home/ubuntu/MiniPupperROS/mangdang") for name in dirs])
 from LCD.ST7789 import ST7789
 
 def callback(data):
