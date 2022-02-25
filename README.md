@@ -131,7 +131,8 @@ export ROS_HOSTNAME=192.168.1.107
 
 ## 2.Quick Start Guide
 ### 2.1 Calibration
-Through this script, you can calibrate the angle of every servo in one turn. Just input the angles.
+Through this script, you can calibrate the angle of every servo in one turn. Just input the angles.</br>
+The hip and shank should be horizontal, and the ham should be vertical.
 ```sh
 roslaunch servo_interface calibrate.launch
 ```
@@ -243,13 +244,13 @@ You can follow these commands to try this demo(make sure you have connected OAK-
 
 ```sh
 # Terminal 1
-roslaunch minipupper bringup.launch
+roslaunch mini_pupper bringup.launch
  
 # Terminal 2
 roslaunch depthai_examples mobile_publisher.launch
  
 # Terminal 3
-rosrun minipupper_detect oak_detect.py
+rosrun mini_pupper_detect oak_detect.py
 ```
 </br>
 
